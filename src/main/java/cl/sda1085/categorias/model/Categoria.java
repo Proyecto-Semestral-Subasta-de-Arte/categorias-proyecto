@@ -8,10 +8,11 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "categorias")
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+
 
 public class Categoria {
 
