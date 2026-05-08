@@ -66,4 +66,28 @@ public class CategoriaService {
     public void eliminar(Long id){
     categoriaRepository.deleteById(id);
 }
+
+    //CRUDs personalizados
+
+    //Buscar por nombre de categoría
+    public  Optional <CategoriaResponseDTO> obtenerPorNombre (String nombre) {
+        return categoriaRepository.findByNombre(nombre)
+                .map(this::mapToDTO);
+
+    }
+
+    //Verificar si existe una categoría por nombre
+    public boolean existePorNombre (String nombre) {
+        return categoriaRepository.existsByNombre(nombre);
+    }
+
+    //Listar ordenadas alfabéticamente
+    public List <CategoriaResponseDTO> obtenerOrdenadasPorNombre() {
+        return categoriaRepository.findAllByOrderByNombreAsc()
+                .stream()
+                .map(this::mapToDTO)
+                .collect(Collectors.toList());
+    }
+
+
 }

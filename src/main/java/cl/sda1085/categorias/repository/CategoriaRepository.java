@@ -14,4 +14,7 @@ public interface CategoriaRepository extends JpaRepository<Categoria,Long> {
 
     // Verificar si existe una categoría por nombre
     boolean existsByNombre (String nombre);
+
+    //Ordenar categorias por orden alfabeticos
+    List <Categoria> findAllByOrderByNombreAsc();
 }
