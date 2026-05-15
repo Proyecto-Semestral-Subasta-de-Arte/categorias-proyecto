@@ -30,8 +30,9 @@ public class CategoriaService {
                 .build();
     }
 
-
+    //------------------------------
     //CRUD estándar
+    //------------------------------
 
     //Obtener todas las categorias
     public List<CategoriaResponseDTO> obtenerTodas(){
@@ -83,10 +84,12 @@ public class CategoriaService {
     public void eliminar(Long id){
         log.warn("Eliminando categoría ID: {}", id);
         categoriaRepository.deleteById(id);
-}
+    }
 
 
+    //------------------------------
     //CRUD personalizado
+    //------------------------------
 
     //Buscar por nombre de categoría
     public  Optional <CategoriaResponseDTO> obtenerPorNombre (String nombre) {
