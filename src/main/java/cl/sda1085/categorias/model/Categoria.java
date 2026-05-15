@@ -12,19 +12,16 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
-
+@Builder
 public class Categoria {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false,length = 100)
+    @Column(nullable = false,length = 100, unique = true)
     private String nombre;
 
-    @Column
+    @Column(length = 500)
     private String descripcion;
-
-
 }
