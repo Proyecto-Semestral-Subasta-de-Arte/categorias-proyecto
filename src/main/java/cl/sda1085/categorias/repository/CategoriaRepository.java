@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface CategoriaRepository extends JpaRepository<Categoria,Long> {
+public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
 
     // Buscar por nombre exacto
     Optional<Categoria> findByNombre (String nombre);
@@ -17,7 +17,7 @@ public interface CategoriaRepository extends JpaRepository<Categoria,Long> {
     boolean existsByNombre (String nombre);
 
     //Ordenar categorias por orden alfabeticos
-    List <Categoria> findAllByOrderByNombreAsc();
+    List<Categoria> findAllByOrderByNombreAsc();
 
     //Búsqueda flexible por nombre (Buscador del Frontend)
     List<Categoria> findByNombreContainingIgnoreCase(String nombre);

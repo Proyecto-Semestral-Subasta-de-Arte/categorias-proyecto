@@ -111,7 +111,8 @@ public class CategoriaService {
 
     //Búsqueda parcial por nombre (ignora mayúsculas / minúsculas)
     public List<CategoriaResponseDTO> buscarPorNombreParcial(String nombre) {
-        log.info("Buscando categorías que contengan: {}", nombre);
+        log.info("Ejecutando filtro dinámico de categorías por concepto: '{}'", nombre);
+
         return categoriaRepository.findByNombreContainingIgnoreCase(nombre)
                 .stream()
                 .map(this::mapToDTO)
@@ -120,7 +121,8 @@ public class CategoriaService {
 
     //Búsqueda parcial por descripción**
     public List<CategoriaResponseDTO> buscarPorDescripcionParcial(String descripcion) {
-        log.info("Filtrando categorías por descripción: {}", descripcion);
+        log.info("Buscando categorías cuya descripción contenga: '{}'", descripcion);
+
         return categoriaRepository.findByDescripcionContainingIgnoreCase(descripcion)
                 .stream()
                 .map(this::mapToDTO)

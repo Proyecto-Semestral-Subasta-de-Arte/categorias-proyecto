@@ -25,11 +25,13 @@ public class CategoriaController {
     //CRUD estándar
     //------------------------------
 
+    //Obtener todas las categorías
     @GetMapping
     public ResponseEntity<List<CategoriaResponseDTO>> obtenerTodas() {
         return ResponseEntity.ok(categoriaService.obtenerTodas());
     }
 
+    //Obtener categoría por ID
     @GetMapping("/{id}")
     public ResponseEntity<CategoriaResponseDTO> obtenerPorId(@PathVariable Long id) {
         return categoriaService.obtenerPorId(id)
@@ -37,11 +39,13 @@ public class CategoriaController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    //Crear (guardar) nueva categoría
     @PostMapping
     public ResponseEntity<CategoriaResponseDTO> guardar(@Valid @RequestBody CategoriaRequestDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(categoriaService.guardar(dto));
     }
 
+    //Actualizar categoría existente
     @PutMapping("/{id}")
     public ResponseEntity<CategoriaResponseDTO> actualizar(@PathVariable Long id, @Valid @RequestBody CategoriaRequestDTO dto) {
         return categoriaService.actualizar(id, dto)
@@ -49,14 +53,16 @@ public class CategoriaController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    //Eliminar categoría
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
         categoriaService.eliminar(id);
         return ResponseEntity.noContent().build();
     }
 
+
     //------------------------------
-    //CRUD estándar
+    //CRUD personalizado
     //------------------------------
 
     //Buscar por nombre exacto
@@ -79,15 +85,15 @@ public class CategoriaController {
         return ResponseEntity.ok(categoriaService.obtenerOrdenadasPorNombre());
     }
 
-    //Búsqueda parcial por nombre (Buscador dinámico)
-    @GetMapping("/buscar/nombre")
-    public ResponseEntity<List<CategoriaResponseDTO>> buscarPorNombre(@RequestParam String q) {
-        return ResponseEntity.ok(categoriaService.buscarPorNombreParcial(q));
+    //Búsqueda parcial por nombre (buscador dinámico)
+    @GetMapping("/buscar/nombre/{nombre}")
+    public ResponseEntity<List<CategoriaResponseDTO>> buscarPorNombre(@PathVariable String nombre) {
+        return ResponseEntity.ok(categoriaService.buscarPorNombreParcial(nombre));
     }
 
     //Búsqueda parcial por descripción
-    @GetMapping("/buscar/descripcion")
-    public ResponseEntity<List<CategoriaResponseDTO>> buscarPorDescripcion(@RequestParam String q) {
-        return ResponseEntity.ok(categoriaService.buscarPorDescripcionParcial(q));
+    @GetMapping("/buscar/descripcion/{descripcion}")
+    public ResponseEntity<List<CategoriaResponseDTO>> buscarPorDescripcion(@PathVariable String descripcion) {
+        return ResponseEntity.ok(categoriaService.buscarPorDescripcionParcial(descripcion));
     }
 }
