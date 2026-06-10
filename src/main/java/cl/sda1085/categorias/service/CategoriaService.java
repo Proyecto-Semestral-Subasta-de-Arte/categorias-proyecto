@@ -30,13 +30,14 @@ public class CategoriaService {
                 .build();
     }
 
+
     //------------------------------
     //CRUD estándar
     //------------------------------
 
     //Obtener todas las categorias
     public List<CategoriaResponseDTO> obtenerTodas(){
-        log.info("Consultando todas las categorías");
+        log.info("Consultando todas las categorías.");
         return categoriaRepository.findAll()
                 .stream()
                 .map(this::mapToDTO)
@@ -46,6 +47,7 @@ public class CategoriaService {
     //Obtener categoría por ID
     public Optional<CategoriaResponseDTO> obtenerPorId(Long id){
         log.info("Buscando categoría con ID: {}", id);
+
         return categoriaRepository.findById(id)
                 .map(this::mapToDTO);
     }
@@ -71,6 +73,7 @@ public class CategoriaService {
     @Transactional
     public Optional<CategoriaResponseDTO> actualizar(Long id, CategoriaRequestDTO dto){
         log.info("Actualizando categoría ID: {}", id);
+
         return categoriaRepository.findById(id).map(existente -> {
             existente.setNombre(dto.getNombre());
             existente.setDescripcion(dto.getDescripcion());
@@ -92,7 +95,7 @@ public class CategoriaService {
     //------------------------------
 
     //Buscar por nombre de categoría
-    public  Optional <CategoriaResponseDTO> obtenerPorNombre (String nombre) {
+    public Optional <CategoriaResponseDTO> obtenerPorNombre (String nombre) {
         return categoriaRepository.findByNombre(nombre).map(this::mapToDTO);
     }
 
@@ -119,7 +122,7 @@ public class CategoriaService {
                 .collect(Collectors.toList());
     }
 
-    //Búsqueda parcial por descripción**
+    //Búsqueda parcial por descripción
     public List<CategoriaResponseDTO> buscarPorDescripcionParcial(String descripcion) {
         log.info("Buscando categorías cuya descripción contenga: '{}'", descripcion);
 

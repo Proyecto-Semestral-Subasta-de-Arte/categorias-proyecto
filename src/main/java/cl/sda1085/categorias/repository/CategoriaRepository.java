@@ -10,10 +10,10 @@ import java.util.Optional;
 @Repository
 public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
 
-    // Buscar por nombre exacto
+    //Buscar por nombre exacto
     Optional<Categoria> findByNombre (String nombre);
 
-    // Verificar si existe una categoría por nombre
+    //Verificar si existe una categoría por nombre
     boolean existsByNombre (String nombre);
 
     //Ordenar categorias por orden alfabeticos

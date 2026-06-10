@@ -18,10 +18,10 @@ public class GlobalExeptionHandler {
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<Map<String, Object>> handleNotFound(ResourceNotFoundException ex) {
         Map<String, Object> error = new HashMap<>();
-        error.put("timestamp", LocalDateTime.now());
-        error.put("estado", HttpStatus.NOT_FOUND.value());
-        error.put("error", "Categoría no encontrada");
-        error.put("mensaje", ex.getMessage());
+        error.put("TIMESTAMP", LocalDateTime.now());
+        error.put("ESTADO", HttpStatus.NOT_FOUND.value());
+        error.put("ERROR", "Categoría no encontrada.");
+        error.put("MENSAJE", ex.getMessage());
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
@@ -37,9 +37,9 @@ public class GlobalExeptionHandler {
             errores.put(campo, mensaje);
         });
 
-        respuesta.put("timestamp", LocalDateTime.now());
-        respuesta.put("estado", HttpStatus.BAD_REQUEST.value());
-        respuesta.put("errores", errores);
+        respuesta.put("TIMESTAMP", LocalDateTime.now());
+        respuesta.put("ESTADO", HttpStatus.BAD_REQUEST.value());
+        respuesta.put("ERRORES", errores);
 
         return new ResponseEntity<>(respuesta, HttpStatus.BAD_REQUEST);
     }
@@ -48,10 +48,10 @@ public class GlobalExeptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> handleGeneric(Exception ex) {
         Map<String, Object> error = new HashMap<>();
-        error.put("timestamp", LocalDateTime.now());
-        error.put("estado", HttpStatus.INTERNAL_SERVER_ERROR.value());
-        error.put("error", "Error interno en el microservicio de categorías");
-        error.put("mensaje", "Ocurrió un problema inesperado. Por favor, intente más tarde.");
+        error.put("TIMESTAMP", LocalDateTime.now());
+        error.put("ESTADO", HttpStatus.INTERNAL_SERVER_ERROR.value());
+        error.put("ERROR", "Error interno en el microservicio de categorías.");
+        error.put("MENSAJE", "Ocurrió un problema inesperado. Por favor, intente más tarde.");
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

@@ -3,6 +3,9 @@ package cl.sda1085.categorias.controller;
 import cl.sda1085.categorias.dto.CategoriaRequestDTO;
 import cl.sda1085.categorias.dto.CategoriaResponseDTO;
 import cl.sda1085.categorias.service.CategoriaService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -11,33 +14,59 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/categorias")
 @CrossOrigin(origins = "*")
+@Tag(name = "Categorías", description = "Controlador para la clasificación de obras de arte y antigüedades.")
 public class CategoriaController {
 
     //Conexión con 'service'
     private final CategoriaService categoriaService;
 
+    @Operation(summary = "Obtener categoría por ID", description = "Retorna el nombre y descripción de una categoría con enlaces de navegación.")
+    @ApiResponse(responseCode = "200", description = "Categoría encontrada.")
+    @ApiResponse(responseCode = "404", description = "La categoría no existe.")
+    @GetMapping("/{id}")
+    public ResponseEntity<CategoriaResponseDTO> obtenerCategoriaPorId(@PathVariable Long id) {
+
+        //Buscar el DTO
+        CategoriaResponseDTO dto = categoriaService.obtenerPorId(id)
+                .orElseThrow(() -> new RuntimeException("No se encontró la categoría con el ID: " + id + "."));
+
+        //HATEOAS
+        dto.add(linkTo(methodOn(CategoriaController.class).obtenerCategoriaPorId(id)).withSelfRel());
+        dto.add(linkTo(methodOn(CategoriaController.class).listarTodasLasCategorias()).withRel("todas-las-categorias"));
+
+        return ResponseEntity.ok(dto);
+    }
+
+    @Operation(summary = "Listar todas las categorías.", description = "Devuelve el catálogo completo de tipos de artículos disponibles.")
+    @GetMapping
+    public ResponseEntity<List<CategoriaResponseDTO>> listarTodasLasCategorias() {
+        return ResponseEntity.ok(categoriaService.obtenerTodas());
+    }
 
     //------------------------------
     //CRUD estándar
     //------------------------------
 
     //Obtener todas las categorías
-    @GetMapping
+    /*@GetMapping
     public ResponseEntity<List<CategoriaResponseDTO>> obtenerTodas() {
         return ResponseEntity.ok(categoriaService.obtenerTodas());
-    }
+    }*/
 
     //Obtener categoría por ID
-    @GetMapping("/{id}")
+    /*@GetMapping("/{id}")
     public ResponseEntity<CategoriaResponseDTO> obtenerPorId(@PathVariable Long id) {
         return categoriaService.obtenerPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
-    }
+    }*/
 
     //Crear (guardar) nueva categoría
     @PostMapping
