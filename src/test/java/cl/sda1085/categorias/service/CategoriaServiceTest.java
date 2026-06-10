@@ -79,7 +79,7 @@ class CategoriaServiceTest {
         //ACT
         CategoriaResponseDTO resultado = categoriaService.obtenerPorId(7L).get();
 
-        // Assert
+        //ASSERT
         assertNotNull(resultado);
         assertEquals("Esculturas", resultado.getNombre());
         verify(categoriaRepository, times(1)).findById(7L);
